@@ -1,61 +1,107 @@
-# 🚀 Getting started with Strapi
+# Servd Backend API
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+This is the backend API server built with Strapi, a headless CMS that provides a REST API for managing all recipe and pantry data.
 
-### `develop`
+## Overview
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+The backend handles all data management for the Servd application. It uses Strapi's powerful content management system combined with PostgreSQL for data storage. The API provides endpoints for recipes, pantry items, saved recipes, and user management.
 
+## Getting Started
+
+### Installation
+
+```bash
+npm install
 ```
+
+### Development Server
+
+```bash
 npm run develop
-# or
-yarn develop
 ```
 
-### `start`
+This starts the Strapi development server with auto-reload enabled. The admin panel will be available at `http://localhost:1337/admin`
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+### Production Build
 
-```
-npm run start
-# or
-yarn start
-```
-
-### `build`
-
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
-```
+```bash
 npm run build
-# or
-yarn build
+npm start
 ```
 
-## ⚙️ Deployment
-
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+## Project Structure
 
 ```
-yarn strapi deploy
+src/
+├── api/                    # API endpoints and data models
+│   ├── recipe/            # Recipe content type and controllers
+│   ├── pantry-item/       # Pantry items content type
+│   └── saved-recipe/      # User's saved recipes content type
+├── extensions/            # Extended configuration
+│   └── users-permissions/ # User authentication setup
+└── index.js              # Server bootstrap file
+
+config/
+├── database.js           # Database configuration
+├── server.js             # Server settings
+├── api.js                # API configuration
+├── middlewares.js        # Middleware setup
+├── admin.js              # Admin panel configuration
+└── plugins.js            # Plugin configuration
 ```
 
-## 📚 Learn more
+## API Endpoints
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+The API provides RESTful endpoints for:
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+- **Recipes** - Create, read, update, delete recipe data
+- **Pantry Items** - Manage user pantry inventory
+- **Saved Recipes** - Store user's favorite recipes
+- **Users** - Authentication and user management (via users-permissions plugin)
 
-## ✨ Community
+Each endpoint follows Strapi's REST convention with full CRUD operations.
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+## Database
+
+The backend uses PostgreSQL as the primary database. Database migrations can be found in the `database/migrations/` directory.
+
+## Content Types
+
+Three main content types are defined:
+
+1. **Recipe** - Contains recipe details, ingredients, instructions
+2. **Pantry Item** - Tracks items in user's pantry
+3. **Saved Recipe** - Links users to their favorite recipes
+
+Each content type has a schema definition in `src/api/[content-type]/content-types/`
+
+## Authentication
+
+User authentication is handled via the `@strapi/plugin-users-permissions` plugin. This provides:
+- User registration and login
+- JWT token generation
+- Role-based access control
+
+## Admin Panel
+
+Access the Strapi admin panel at `http://localhost:1337/admin` when the server is running. This provides a user-friendly interface for managing all content.
+
+## Scripts
+
+- `npm run develop` - Start with auto-reload
+- `npm start` - Start production server
+- `npm run build` - Build admin panel
+- `npm run strapi` - Run strapi CLI commands
+- `npm run upgrade` - Upgrade Strapi to latest version
+
+## Environment Variables
+
+Create a `.env` file in the backend directory with your database credentials and other configuration.
+
+## Deployment
+
+The backend can be deployed to various platforms including Strapi Cloud, Heroku, or your own server. See [Strapi deployment docs](https://docs.strapi.io/dev-docs/deployment) for options.
 
 ---
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+For more information about Strapi, visit [strapi.io](https://strapi.io)
